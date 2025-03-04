@@ -1,0 +1,33 @@
+{
+  "name": "hexdeck-frontend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@tsconfig/svelte": "^5.0.4",
+    "flowbite": "^3.1.2",
+    "flowbite-svelte": "^0.47.4",
+    "flowbite-svelte-icons": "^2.0.2",
+    "sass-embedded": "^1.83.4",
+    "svelte": "^5.15.0",
+    "svelte-check": "^4.1.1",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.5"
+  },
+  "dependencies": {
+    "@roxi/routify": "3.0.0-next.254",
+    "@tailwindcss/vite": "^4.0.6",
+    "lucide-svelte": "^0.474.0",
+    "routify": "^2.0.1",
+    "socket.io-client": "^4.8.1",
+    "svelte-exmarkdown": "^4.0.2",
+    "svelte-i18n": "^4.0.1",
+    "tailwindcss": "^4.0.6"
+  }
+}
