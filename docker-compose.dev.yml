@@ -1,0 +1,8 @@
+services:
+  mongodb-dev:
+    user: "1000"
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data/mongodb-dev/:/data/db/
+    image: mongodb/mongodb-community-server:latest
