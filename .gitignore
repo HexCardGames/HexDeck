@@ -5,3 +5,9 @@
 *.ntvs*
 *.njsproj
 *.sln
+
+# Secrets
+.env
+
+# MongoDB docker volume
+data/
