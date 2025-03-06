@@ -5,8 +5,18 @@
     import { GameState, sessionStore } from "../stores/sessionStore";
     import { Spinner } from "flowbite-svelte";
     import { SvelteDate } from "svelte/reactivity";
+    import { requestJoinRoom } from "../stores/roomStore";
 
-    onMount(() => {
+    onMount(async () => {
+        const params = new URLSearchParams(window.location.search);
+        const joinParam = params.get('join');
+        console.log('Join param:', joinParam);
+
+        if(joinParam) {
+            await requestJoinRoom(joinParam);
+            // Maybe show message instead redirecting to / if the join was unsuccessful
+        }
+
         if (!sessionStore.hasSessionData()) {
             console.warn("No sessionData found! Go back home.");
             window.history.replaceState({}, "", "/");

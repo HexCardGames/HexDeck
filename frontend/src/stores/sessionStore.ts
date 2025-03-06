@@ -38,6 +38,7 @@ interface SessionData {
 interface RoomInfoObj {
   RoomId: string;
   JoinCode: string;
+  TopCard: any;
   GameState: GameState;
   CardDeckId: number;
   Winner?: string;

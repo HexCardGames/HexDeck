@@ -58,7 +58,7 @@
     function copyGameLinkToClipboard() {
         navigator.clipboard
             .writeText(
-                `${window.location.origin}/join/${$sessionStore.joinCode}`,
+                `${window.location.origin}/Game?join=${$sessionStore.joinCode}`,
             )
             .then(() => {
                 copied = true;
@@ -69,6 +69,10 @@
     function leaveRoom() {
         sessionStore.leaveRoom();
         showLeaveModal = false;
+    }
+
+    function startGame() {
+        // TODO start game
     }
 </script>
 
@@ -173,6 +177,7 @@
     >
 </div>
 
+<!-- TODO Grid not fully responsive -->
 <div class="grid md:grid-flow-col grid-flow-row justify-center mt-6 mb-2 gap-4">
     <!-- Rename (This) Player -->
     {#if sessionStore.isConnected()}
@@ -235,11 +240,11 @@
     </Popover>
 
     <!-- Start game button -->
-    {#if sessionStore.getPlayerPermissions().isHost}
+    {#if sessionStore.getPlayerPermissions().isHost && sessionStore.getState().gameState === GameState.Lobby}
         <Button
             class="w-xs mx-auto text-dark bg-green-200 dark:bg-green-900 hover:bg-green-200 dark:hover:bg-green-900 backdrop-blur-lg border border-black/20 dark:border-white/20 shadow-lg p-4 rounded-2xl flex items-center justify-between transition-all cursor-pointer"
             on:click={() => {
-                copyGameCodeToClipboard();
+                startGame();
             }}
         >
             <div class="grid justify-items-start">
@@ -320,7 +325,7 @@
                         <Button
                             outline={true}
                             color="alternative"
-                            class="p-2! text-red-800 hover:bg-red-500"
+                            class="p-2! text-blue-800 hover:bg-blue-500"
                             size="lg"
                             on:click={() => {
                                 showRenameModal = true;
