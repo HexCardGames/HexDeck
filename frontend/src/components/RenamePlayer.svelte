@@ -68,7 +68,7 @@
         <!-- Rename Player -->
         <div class="w-full">
             <input
-                class="text-black w-full dark:text-white mr-md w-full border-0 focus:outline-none h-8 bg-opacity-50"
+                class="text-black w-full dark:text-white mr-md w-full border-0 focus:outline-none focus:ring-0 h-8 bg-transparent"
                 bind:value={playerName}
                 on:input={onInput}
                 bind:this={inputRef}

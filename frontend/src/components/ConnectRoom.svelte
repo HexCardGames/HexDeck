@@ -143,7 +143,7 @@
                 {/if}
             </InputAddon>
             <input
-                class="bg-primary-200 px-4 focus:bg-primary-100 text-black dark:text-white mr-md dark:bg-primary-700 dark:focus:bg-primary-600 w-full border-0 focus:outline-none h-12"
+                class="bg-primary-200 px-4 focus:bg-primary-100 placeholder:text-gray-500 dark:placeholder:text-gray-300 mr-md dark:bg-primary-700 dark:focus:bg-primary-600 w-full border-0 focus:outline-none focus:ring-0 h-12"
                 placeholder={$_("landing_page.connect_room.enter_room_code")}
                 class:cursor-not-allowed={$loading}
                 class:opacity-50={$loading}

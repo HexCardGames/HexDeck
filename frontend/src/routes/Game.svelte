@@ -8,9 +8,9 @@
     import { requestJoinRoom } from "../stores/roomStore";
 
     onMount(async () => {
+        // TODO: check if already connected to room, currently its overwriting the session
         const params = new URLSearchParams(window.location.search);
         const joinParam = params.get('join');
-        console.log('Join param:', joinParam);
 
         if(joinParam) {
             await requestJoinRoom(joinParam);

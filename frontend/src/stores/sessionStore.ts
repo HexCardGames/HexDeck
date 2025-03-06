@@ -80,6 +80,10 @@ class SessionManager {
     return get(this.store);
   }
 
+  startGame() {
+    this.socket?.emit("StartGame");
+  }
+
   hasSessionData(): boolean {
     const state = this.getState();
     if (state.sessionToken && state.userId) return true;

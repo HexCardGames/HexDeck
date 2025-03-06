@@ -37,8 +37,8 @@
     <h4 class="text-xl font-semibold">{$_("landing_page.stats_container.title")}</h4>
     <!-- content div -->
     <div class="grid justify-items-start text-start">
-        <span>{$_("landing_page.stats_container.online_player_count", { values: { count: stats.online_player_count ?? $_("landing_page.stats_container.no_data") } })}</span>
-        <span>{$_("landing_page.stats_container.current_game_rooms", { values: { count: stats.current_game_rooms ?? $_("landing_page.stats_container.no_data") } })}</span>
-        <span>{$_("landing_page.stats_container.games_played", { values: { count: stats.games_played ?? $_("landing_page.stats_container.no_data") } })}</span>
+        <span>{$_("landing_page.stats_container.online_player_count", { values: { count: stats.online_player_count ?? "..." } })}</span>
+        <span>{$_("landing_page.stats_container.current_game_rooms", { values: { count: stats.current_game_rooms ?? "..." } })}</span>
+        <span>{$_("landing_page.stats_container.games_played", { values: { count: stats.games_played ?? "..." } })}</span>
     </div>
 </div>

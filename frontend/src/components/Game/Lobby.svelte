@@ -70,10 +70,6 @@
         sessionStore.leaveRoom();
         showLeaveModal = false;
     }
-
-    function startGame() {
-        // TODO start game
-    }
 </script>
 
 <!-- Modal: Confirm Leave Room -->
@@ -244,7 +240,7 @@
         <Button
             class="w-xs mx-auto text-dark bg-green-200 dark:bg-green-900 hover:bg-green-200 dark:hover:bg-green-900 backdrop-blur-lg border border-black/20 dark:border-white/20 shadow-lg p-4 rounded-2xl flex items-center justify-between transition-all cursor-pointer"
             on:click={() => {
-                startGame();
+                sessionStore.startGame();
             }}
         >
             <div class="grid justify-items-start">

@@ -1,3 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap');
-@import "tailwindcss";
+@import 'tailwindcss';
+@plugin 'flowbite/plugin';
+@custom-variant dark {
+    @media not print {
+      .dark & {
+        @slot;
+      }
+    }
+  }
+@source "../node_modules/flowbite-svelte/dist";
 @import './app.scss';
