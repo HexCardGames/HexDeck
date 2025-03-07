@@ -69,14 +69,16 @@
     "player_name": "Player Name",
     "status": "Status",
     "host": "Host",
-    "you": "You"
+    "you": "You",
+    "player": "Player",
+    "return_to_game": "Return to game"
   },
   "player_status": {
     "connected": "Connected",
     "disconnected": "Disconnected"
   },
   "game_status": {
-    "game_status": "Game status: {game_status}",
+    "game_status": "Game status:",
     "lobby": "Lobby",
     "running": "Running",
     "ended": "Ended"

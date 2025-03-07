@@ -1,9 +1,11 @@
 <script>
     import { theme, toggleTheme } from "../stores/theme";
-    import { Moon, Sun, SunMoon } from "lucide-svelte";
+    import { Gamepad2, Moon, Sun, SunMoon, UsersRound } from "lucide-svelte";
     import { Tooltip, Button } from "flowbite-svelte";
     import options from "../stores/pageoptions";
     import { _ } from "svelte-i18n";
+    import gameStore, { toggleLobbyOverlay } from "../stores/gameStore";
+    import { GameState, sessionStore } from "../stores/sessionStore";
 </script>
 
 <header class="Header">
@@ -16,7 +18,8 @@
             <h1 class="text-3xl">{$_("page_name")}</h1>
         </div>
         <div class="middle-header-group header-group"></div>
-        <div class="right-header-group header-group">
+        <div class="right-header-group header-group gap-2">
+            <!-- Theme btn -->
             <Button
                 on:click={toggleTheme}
                 class="!p-2 mt-2 rounded-full focus:bg-primary-700 hover:bg-primary-600 focus:ring-0"
@@ -25,29 +28,71 @@
                 {#if $theme === "dark"}
                     <Moon size="2rem" />
                 {:else if $theme === "light"}
-                <Sun size="2rem" />
+                    <Sun size="2rem" />
                 {:else if $theme === "system"}
-                <SunMoon size="2rem" />
+                    <SunMoon size="2rem" />
                 {/if}
             </Button>
-            <Tooltip type='auto'>
-                {$_("header.theme_btn.tooltip", { values: { current_theme: $_(`header.theme_btn.${$theme}`)}})}
+            <Tooltip type="auto">
+                {$_("header.theme_btn.tooltip", {
+                    values: { current_theme: $_(`header.theme_btn.${$theme}`) },
+                })}
             </Tooltip>
+
+            <!-- Player list btn (ingame) -->
+            {#if $sessionStore.gameState == GameState.Running}
+                <Button
+                    on:click={() => {
+                        toggleLobbyOverlay();
+                    }}
+                    class="!p-2 mt-2 rounded-full focus:bg-primary-700 hover:bg-primary-600 focus:ring-0"
+                    color="none"
+                >
+                    {#if $gameStore.isLobbyOverlayShown}
+                        <Gamepad2 size="2rem" />
+                    {:else}
+                        <UsersRound size="2rem" />
+                    {/if}
+                </Button>
+                {#if $gameStore.isLobbyOverlayShown}
+                    <Tooltip type="auto">
+                        {$_("lobby.return_to_game")}
+                    </Tooltip>
+                {:else}
+                    <Tooltip type="auto">
+                        {$_("lobby.player")}
+                    </Tooltip>
+                {/if}
+            {/if}
         </div>
     </div>
 </header>
 
-<div class="page-slot">
-    <slot />
+<div class="main-container">
+    <div class="page-slot">
+        <slot />
+    </div>
 </div>
 
 <style>
-    .page-slot {
-        margin-top: 90px;
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        padding-top: 100px;
     }
-    
+
+    .page-slot {
+        flex-grow: 1;
+        overflow: hidden;
+    }
+
     .Header {
-        background: linear-gradient(180deg, var(--default-background-color) 30%, transparent 100%);
+        background: linear-gradient(
+            180deg,
+            var(--default-background-color) 30%,
+            transparent 100%
+        );
         opacity: 1;
         position: fixed;
         height: 100px;
@@ -69,6 +114,7 @@
         width: 100%;
         height: 100%;
     }
+
     .Header-content {
         display: flex;
         justify-content: space-between;

@@ -21,9 +21,13 @@
         UserX,
         Play,
         TextCursorInput,
+
+        Gamepad2
+
     } from "lucide-svelte";
     import { _ } from "svelte-i18n";
     import { GameState, sessionStore } from "../../stores/sessionStore";
+    import { toggleLobbyOverlay } from '../../stores/gameStore';
 
     let copied = false;
     let showLeaveModal = false;
@@ -160,16 +164,27 @@
     <span>{$_("lobby.leave_game")}</span>
 </Button>
 
+<!-- Return to game Button -->
+{#if sessionStore.getState().gameState !== GameState.Lobby}
+<Button
+    color="none"
+    class="sm:absolute m-2 right-0 border-2 border-gray-500 dark:border-gray-300 hover:bg-gray-500 dark:hover:bg-gray-300 hover:text-white dark:hover:text-black rounded-full text-gray-500 dark:text-gray-300"
+    on:click={() => {
+        toggleLobbyOverlay();
+    }}
+>
+    <span>{$_("lobby.return_to_game")}</span>
+    <Gamepad2 class="ml-2" />
+</Button>
+{/if}
+
 <!-- Game Status -->
 <div class="text-center p-6 w-full">
-    <span
-        >{$_("game_status.game_status", {
-            values: {
-                game_status: $_(
-                    `game_status.${GameState[$sessionStore.gameState].toLowerCase()}`,
-                ),
-            },
-        })}</span
+    <span>{$_("game_status.game_status")}
+        <Badge color="dark">
+            {$_(`game_status.${GameState[$sessionStore.gameState].toLowerCase()}`)}
+        </Badge>
+        </span
     >
 </div>
 
@@ -181,6 +196,8 @@
     {/if}
 
     <!-- Copy Join Code Button -->
+     <!-- TODO add Streamer mode (hide room code) here -->
+    {#if sessionStore.getState().gameState === GameState.Lobby}
     <Button
         id="b1"
         type="button"
@@ -234,6 +251,7 @@
             {/if}
         </div>
     </Popover>
+    {/if}
 
     <!-- Start game button -->
     {#if sessionStore.getPlayerPermissions().isHost && sessionStore.getState().gameState === GameState.Lobby}
@@ -265,7 +283,7 @@
 {/if}
 
 <!-- Players Table -->
-<Table striped hoverable>
+<Table striped hoverable noborder class="mb-16">
     <TableHead>
         <TableHeadCell class="cursor-pointer flex items-center">
             {$_("lobby.player_name")}
@@ -275,7 +293,7 @@
 
     <TableBody tableBodyClass="divide-y">
         {#each filteredPlayers() as player}
-            <TableBodyRow>
+            <TableBodyRow class="!bg-black/2 hover:!bg-black/4 dark:!bg-white/20 dark:hover:!bg-white/30">
                 <TableBodyCell>
                     {player.Username}
                     {#if sessionStore.isCurrentPlayer(player.PlayerId)}

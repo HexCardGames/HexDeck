@@ -55,6 +55,7 @@
     });
 </script>
 
+<!-- TODO dedicated rejoinRoom and rejoinSession loading states & error messages -->
 <div class="w-full max-w-md">
     {#if $rejoinRoomSessionData?.sessionToken}
         <div class="mb-6">
