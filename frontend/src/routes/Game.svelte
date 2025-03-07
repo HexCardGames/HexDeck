@@ -5,11 +5,10 @@
     import { _ } from "svelte-i18n";
     import { onMount } from "svelte";
     import { GameState, sessionStore } from "../stores/sessionStore";
-    import { Button, Spinner, Tooltip } from "flowbite-svelte";
+    import { Spinner } from "flowbite-svelte";
     import { SvelteDate } from "svelte/reactivity";
     import { requestJoinRoom } from "../stores/roomStore";
-    import gameStore, { toggleLobbyOverlay } from "../stores/gameStore";
-    import { UsersRound } from "lucide-svelte";
+    import gameStore from "../stores/gameStore";
 
     onMount(async () => {
         // TODO: check if already connected to room, currently its overwriting the session
@@ -31,9 +30,7 @@
 
 {#if !$sessionStore.connected}
     <div class="flex flex-row w-full mt-32 h-full justify-center items-center">
-        <div
-            class="flex flex-col items-center gap-6 p-7 md:flex-row md:gap-8 rounded-2xl"
-        >
+        <div class="flex flex-col items-center gap-6 p-7 md:flex-row md:gap-8 rounded-2xl">
             <div>
                 <Spinner size="12" class="text-primary-100" />
             </div>
@@ -42,9 +39,7 @@
                     {$_("game_screen.loading")}
                 </span>
                 <span class="font-medium text-sky-500">
-                    {$sessionStore.players?.find(
-                        (player) => player.PlayerId == $sessionStore.userId,
-                    )?.Username}
+                    {$sessionStore.players?.find((player) => player.PlayerId == $sessionStore.userId)?.Username}
                 </span>
                 <span class="flex gap-2 font-medium text-gray-600 dark:text-gray-400">
                     <span>{new SvelteDate().toLocaleString()}</span>

@@ -1,42 +1,43 @@
 {
-  "name": "hexdeck-frontend",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json"
-  },
-  "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^5.0.3",
-    "@tailwindcss/forms": "^0.5.9",
-    "@tailwindcss/typography": "^0.5.15",
-    "@tailwindcss/vite": "^4.0.0",
-    "@tsconfig/svelte": "^5.0.4",
-    "flowbite": "^3.1.2",
-    "flowbite-svelte": "^0.48.4",
-    "flowbite-svelte-icons": "^2.0.2",
-    "sass-embedded": "^1.85.1",
-    "svelte": "^5.22.5",
-    "svelte-check": "^4.1.4",
-    "tailwindcss": "^4.0.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0"
-  },
-  "dependencies": {
-    "@roxi/routify": "3.0.0-next.254",
-    "@tailwindcss/vite": "^4.0.10",
-    "lucide-svelte": "^0.477.0",
-    "routify": "^2.0.1",
-    "socket.io-client": "^4.8.1",
-    "svelte-exmarkdown": "^4.0.3",
-    "svelte-i18n": "^4.0.1",
-    "tailwindcss": "^4.0.10"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
-  }
+    "name": "hexdeck-frontend",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "check": "svelte-check --tsconfig ./tsconfig.app.json && tsc -p tsconfig.node.json"
+    },
+    "devDependencies": {
+        "@sveltejs/vite-plugin-svelte": "^5.0.3",
+        "@tailwindcss/forms": "^0.5.9",
+        "@tailwindcss/typography": "^0.5.15",
+        "@tailwindcss/vite": "^4.0.0",
+        "@tsconfig/svelte": "^5.0.4",
+        "flowbite": "^3.1.2",
+        "flowbite-svelte": "^0.48.4",
+        "flowbite-svelte-icons": "^2.0.2",
+        "prettier": "3.5.3",
+        "sass-embedded": "^1.85.1",
+        "svelte": "^5.22.5",
+        "svelte-check": "^4.1.4",
+        "tailwindcss": "^4.0.0",
+        "typescript": "~5.8.2",
+        "vite": "^6.2.0"
+    },
+    "dependencies": {
+        "@roxi/routify": "3.0.0-next.254",
+        "@tailwindcss/vite": "^4.0.10",
+        "lucide-svelte": "^0.477.0",
+        "routify": "^2.0.1",
+        "socket.io-client": "^4.8.1",
+        "svelte-exmarkdown": "^4.0.3",
+        "svelte-i18n": "^4.0.1",
+        "tailwindcss": "^4.0.10"
+    },
+    "pnpm": {
+        "onlyBuiltDependencies": [
+            "esbuild"
+        ]
+    }
 }

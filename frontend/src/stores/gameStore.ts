@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store";
 
 interface GameState {
     isLobbyOverlayShown: boolean;
@@ -11,7 +11,7 @@ const initialState: GameState = {
 const gameStore = writable<GameState>(initialState);
 
 export const toggleLobbyOverlay = () => {
-    gameStore.update(state => ({
+    gameStore.update((state) => ({
         ...state,
         isLobbyOverlayShown: !state.isLobbyOverlayShown,
     }));

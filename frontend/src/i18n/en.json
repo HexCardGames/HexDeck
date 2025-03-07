@@ -1,105 +1,105 @@
 {
-  "page_name": "HexDeck",
-  "header": {
-    "theme_btn": {
-      "tooltip": "Switch theme: {current_theme}",
-      "dark": "Dark",
-      "light": "Light",
-      "system": "System"
+    "page_name": "HexDeck",
+    "header": {
+        "theme_btn": {
+            "tooltip": "Switch theme: {current_theme}",
+            "dark": "Dark",
+            "light": "Light",
+            "system": "System"
+        }
+    },
+    "footer": {
+        "imprint": "Imprint",
+        "github": "GitHub"
+    },
+    "404": {
+        "404_page_not_found": "404 - Page not found",
+        "page_not_found": "The page {page} could not be found."
+    },
+    "imprint": {
+        "title": "Imprint",
+        "something_went_wrong": "Something went wrong",
+        "timeout_while_loading": "Timeout while loading",
+        "retry": "Retry",
+        "go_back": "Back"
+    },
+    "landing_page": {
+        "sub_title": "Multiplayer, free, for everyone",
+        "connect_room": {
+            "rejoin_last_room": "Rejoin last game",
+            "join_last_room": "Join last room",
+            "enter_room_code": "Enter a room code",
+            "join_room": "Join",
+            "enter_room_code_to_join": "Please enter a room code to join",
+            "or": "or",
+            "create_a_room": "Create a room"
+        },
+        "open_source_container": {
+            "title": "Open Source",
+            "content": "The Source Code of this game is available on GitHub",
+            "github": "GitHub"
+        },
+        "stats_container": {
+            "title": "Stats",
+            "online_player_count": "Current player: {count}",
+            "current_game_rooms": "Current games: {count}",
+            "games_played": "Games played: {count}",
+            "no_data": "No data"
+        },
+        "show_footer": "Show footer"
+    },
+    "lobby": {
+        "search_player": "Search player...",
+        "kick_player": "Kick player",
+        "confirm_kick_player_message": "Do you really want to kick the player {player_name}?",
+        "confirm_kick_player": "Kick",
+        "rename_yourself": "Rename yourself",
+        "rename_player": "Rename player",
+        "regenerate_join_code": "Regenerate join code",
+        "copy_join_code": "Copy join code",
+        "room_join_code": "Room Join Code",
+        "copy_code": "Copy Code",
+        "copy_join_link": "Copy Link",
+        "leave_game": "Leave game",
+        "confirm_leave_message": "Do you really want to leave the game?",
+        "confirm_leave": "Yes, leave",
+        "cancel": "Cancel",
+        "start_game": "Start game",
+        "copied": "Copied",
+        "player_name": "Player Name",
+        "status": "Status",
+        "host": "Host",
+        "you": "You",
+        "player": "Player",
+        "return_to_game": "Return to game"
+    },
+    "player_status": {
+        "connected": "Connected",
+        "disconnected": "Disconnected"
+    },
+    "game_status": {
+        "game_status": "Game status:",
+        "lobby": "Lobby",
+        "running": "Running",
+        "ended": "Ended"
+    },
+    "error_messages": {
+        "no_room_found": "No room was found with this code",
+        "request_timeout": "Internet failed! (Timeout)",
+        "invalid_player": "Invalid player",
+        "invalid_session": "Invalid session",
+        "game_not_running": "The game is not running",
+        "player_not_active": "The player ist not active",
+        "insufficient_permission": "Insufficient permission",
+        "username_taken": "The username is already taken",
+        "game_already_started": "The game has already started",
+        "missing_parameter": "Missing parameter",
+        "invalid_card_index": "Invalid card selected (Index not in bounds)",
+        "card_not_playable": "The card is not playable",
+        "card_not_updatable": "The card is not updatable",
+        "error_message": "Error message: {error_message}"
+    },
+    "game_screen": {
+        "loading": "Loading"
     }
-  },
-  "footer": {
-    "imprint": "Imprint",
-    "github": "GitHub"
-  },
-  "404": {
-    "404_page_not_found": "404 - Page not found",
-    "page_not_found": "The page {page} could not be found."
-  },
-  "imprint": {
-    "title": "Imprint",
-    "something_went_wrong": "Something went wrong",
-    "timeout_while_loading": "Timeout while loading",
-    "retry": "Retry",
-    "go_back": "Back"
-  },
-  "landing_page": {
-    "sub_title": "Multiplayer, free, for everyone",
-    "connect_room": {
-      "rejoin_last_room": "Rejoin last game",
-      "join_last_room": "Join last room",
-      "enter_room_code": "Enter a room code",
-      "join_room": "Join",
-      "enter_room_code_to_join": "Please enter a room code to join",
-      "or": "or",
-      "create_a_room": "Create a room"
-    },
-    "open_source_container": {
-      "title": "Open Source",
-      "content": "The Source Code of this game is available on GitHub",
-      "github": "GitHub"
-    },
-    "stats_container": {
-      "title": "Stats",
-      "online_player_count": "Current player: {count}",
-      "current_game_rooms": "Current games: {count}",
-      "games_played": "Games played: {count}",
-      "no_data": "No data"
-    },
-    "show_footer": "Show footer"
-  },
-  "lobby": {
-    "search_player": "Search player...",
-    "kick_player": "Kick player",
-    "confirm_kick_player_message": "Do you really want to kick the player {player_name}?",
-    "confirm_kick_player": "Kick",
-    "rename_yourself": "Rename yourself",
-    "rename_player": "Rename player",
-    "regenerate_join_code": "Regenerate join code",
-    "copy_join_code": "Copy join code",
-    "room_join_code": "Room Join Code",
-    "copy_code": "Copy Code",
-    "copy_join_link": "Copy Link",
-    "leave_game": "Leave game",
-    "confirm_leave_message": "Do you really want to leave the game?",
-    "confirm_leave": "Yes, leave",
-    "cancel": "Cancel",
-    "start_game": "Start game",
-    "copied": "Copied",
-    "player_name": "Player Name",
-    "status": "Status",
-    "host": "Host",
-    "you": "You",
-    "player": "Player",
-    "return_to_game": "Return to game"
-  },
-  "player_status": {
-    "connected": "Connected",
-    "disconnected": "Disconnected"
-  },
-  "game_status": {
-    "game_status": "Game status:",
-    "lobby": "Lobby",
-    "running": "Running",
-    "ended": "Ended"
-  },
-  "error_messages": {
-    "no_room_found": "No room was found with this code",
-    "request_timeout": "Internet failed! (Timeout)",
-    "invalid_player": "Invalid player",
-    "invalid_session": "Invalid session",
-    "game_not_running": "The game is not running",
-    "player_not_active": "The player ist not active",
-    "insufficient_permission": "Insufficient permission",
-    "username_taken": "The username is already taken",
-    "game_already_started": "The game has already started",
-    "missing_parameter": "Missing parameter",
-    "invalid_card_index": "Invalid card selected (Index not in bounds)",
-    "card_not_playable": "The card is not playable",
-    "card_not_updatable": "The card is not updatable",
-    "error_message": "Error message: {error_message}"
-  },
-  "game_screen": {
-    "loading": "Loading"
-  }
 }

@@ -88,11 +88,7 @@
     }
 
     .Header {
-        background: linear-gradient(
-            180deg,
-            var(--default-background-color) 30%,
-            transparent 100%
-        );
+        background: linear-gradient(180deg, var(--default-background-color) 30%, transparent 100%);
         opacity: 1;
         position: fixed;
         height: 100px;
@@ -103,11 +99,7 @@
     }
 
     .Header-bg {
-        background: linear-gradient(
-            180deg,
-            var(--primary) 50%,
-            transparent 100%
-        );
+        background: linear-gradient(180deg, var(--primary) 50%, transparent 100%);
         z-index: -1;
         margin: 0px;
         position: absolute;

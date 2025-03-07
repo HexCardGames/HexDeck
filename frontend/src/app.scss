@@ -1,88 +1,90 @@
 @theme inline {
-  --color-primary-50: color-mix(in srgb, var(--primary) 10%, white);
-  --color-primary-100: color-mix(in srgb, var(--primary) 20%, white);
-  --color-primary-200: color-mix(in srgb, var(--primary) 30%, white);
-  --color-primary-300: color-mix(in srgb, var(--primary) 40%, white);
-  --color-primary-400: color-mix(in srgb, var(--primary) 50%, white);
-  --color-primary-500: color-mix(in srgb, var(--primary) 60%, white);
-  --color-primary-600: color-mix(in srgb, var(--primary) 70%, white);
-  --color-primary-700: color-mix(in srgb, var(--primary) 80%, white);
-  --color-primary-800: color-mix(in srgb, var(--primary) 90%, white);
-  --color-primary-900: var(--primary);
-  --color-primary-950: color-mix(in srgb, var(--primary) 90%, black);
+    --color-primary-50: color-mix(in srgb, var(--primary) 10%, white);
+    --color-primary-100: color-mix(in srgb, var(--primary) 20%, white);
+    --color-primary-200: color-mix(in srgb, var(--primary) 30%, white);
+    --color-primary-300: color-mix(in srgb, var(--primary) 40%, white);
+    --color-primary-400: color-mix(in srgb, var(--primary) 50%, white);
+    --color-primary-500: color-mix(in srgb, var(--primary) 60%, white);
+    --color-primary-600: color-mix(in srgb, var(--primary) 70%, white);
+    --color-primary-700: color-mix(in srgb, var(--primary) 80%, white);
+    --color-primary-800: color-mix(in srgb, var(--primary) 90%, white);
+    --color-primary-900: var(--primary);
+    --color-primary-950: color-mix(in srgb, var(--primary) 90%, black);
 
-  --color-secondary-50: color-mix(in srgb, var(--secondary) 10%, white);
-  --color-secondary-100: color-mix(in srgb, var(--secondary) 20%, white);
-  --color-secondary-200: color-mix(in srgb, var(--secondary) 30%, white);
-  --color-secondary-300: color-mix(in srgb, var(--secondary) 40%, white);
-  --color-secondary-400: color-mix(in srgb, var(--secondary) 50%, white);
-  --color-secondary-500: color-mix(in srgb, var(--secondary) 60%, white);
-  --color-secondary-600: color-mix(in srgb, var(--secondary) 70%, white);
-  --color-secondary-700: color-mix(in srgb, var(--secondary) 80%, white);
-  --color-secondary-800: color-mix(in srgb, var(--secondary) 90%, white);
-  --color-secondary-900: var(--secondary);
-  --color-secondary-950: color-mix(in srgb, var(--secondary) 90%, black);
+    --color-secondary-50: color-mix(in srgb, var(--secondary) 10%, white);
+    --color-secondary-100: color-mix(in srgb, var(--secondary) 20%, white);
+    --color-secondary-200: color-mix(in srgb, var(--secondary) 30%, white);
+    --color-secondary-300: color-mix(in srgb, var(--secondary) 40%, white);
+    --color-secondary-400: color-mix(in srgb, var(--secondary) 50%, white);
+    --color-secondary-500: color-mix(in srgb, var(--secondary) 60%, white);
+    --color-secondary-600: color-mix(in srgb, var(--secondary) 70%, white);
+    --color-secondary-700: color-mix(in srgb, var(--secondary) 80%, white);
+    --color-secondary-800: color-mix(in srgb, var(--secondary) 90%, white);
+    --color-secondary-900: var(--secondary);
+    --color-secondary-950: color-mix(in srgb, var(--secondary) 90%, black);
 
-  --color-tertiary-50: color-mix(in srgb, var(--tertiary) 10%, white);
-  --color-tertiary-100: color-mix(in srgb, var(--tertiary) 20%, white);
-  --color-tertiary-200: color-mix(in srgb, var(--tertiary) 30%, white);
-  --color-tertiary-300: color-mix(in srgb, var(--tertiary) 40%, white);
-  --color-tertiary-400: color-mix(in srgb, var(--tertiary) 50%, white);
-  --color-tertiary-500: color-mix(in srgb, var(--tertiary) 60%, white);
-  --color-tertiary-600: color-mix(in srgb, var(--tertiary) 70%, white);
-  --color-tertiary-700: color-mix(in srgb, var(--tertiary) 80%, white);
-  --color-tertiary-800: color-mix(in srgb, var(--tertiary) 90%, white);
-  --color-tertiary-900: var(--tertiary);
-  --color-tertiary-950: color-mix(in srgb, var(--tertiary) 90%, black);
+    --color-tertiary-50: color-mix(in srgb, var(--tertiary) 10%, white);
+    --color-tertiary-100: color-mix(in srgb, var(--tertiary) 20%, white);
+    --color-tertiary-200: color-mix(in srgb, var(--tertiary) 30%, white);
+    --color-tertiary-300: color-mix(in srgb, var(--tertiary) 40%, white);
+    --color-tertiary-400: color-mix(in srgb, var(--tertiary) 50%, white);
+    --color-tertiary-500: color-mix(in srgb, var(--tertiary) 60%, white);
+    --color-tertiary-600: color-mix(in srgb, var(--tertiary) 70%, white);
+    --color-tertiary-700: color-mix(in srgb, var(--tertiary) 80%, white);
+    --color-tertiary-800: color-mix(in srgb, var(--tertiary) 90%, white);
+    --color-tertiary-900: var(--tertiary);
+    --color-tertiary-950: color-mix(in srgb, var(--tertiary) 90%, black);
 }
 
 @layer base {
-  button,
-  [role='button'] {
-    cursor: pointer;
-  }
+    button,
+    [role="button"] {
+        cursor: pointer;
+    }
 }
 
 body {
-  margin: 0;
-  color: var(--default-element-color);
-  background-color: var(--default-background-color);
-  transition: color 0.4s ease, background-color 0.2s ease;
+    margin: 0;
+    color: var(--default-element-color);
+    background-color: var(--default-background-color);
+    transition:
+        color 0.4s ease,
+        background-color 0.2s ease;
 }
 
 :root {
-  font-family: "Lexend Deca", serif;
-  font-optical-sizing: auto;
-  line-height: 1.5;
-  font-weight: 400;
+    font-family: "Lexend Deca", serif;
+    font-optical-sizing: auto;
+    line-height: 1.5;
+    font-weight: 400;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 
-  --primary: #d5b6ff;
-  --secondary: #ffb6f5;
-  --tertiary: #08aeea;
+    --primary: #d5b6ff;
+    --secondary: #ffb6f5;
+    --tertiary: #08aeea;
 
-  --default-element-color: #213547;
-  --default-background-color: #ffffff;
+    --default-element-color: #213547;
+    --default-background-color: #ffffff;
 }
 
 body.dark-theme {
-  --primary: #53346a;
-  --secondary: #710cff;
-  --tertiary: #0b465c;
+    --primary: #53346a;
+    --secondary: #710cff;
+    --tertiary: #0b465c;
 
-  --default-element-color: rgba(255, 255, 255, 0.87);
-  --default-background-color: oklch(0.279 0.041 260.031);
+    --default-element-color: rgba(255, 255, 255, 0.87);
+    --default-background-color: oklch(0.279 0.041 260.031);
 }
 
 body.light-theme {
-  --primary: #d5b6ff;
-  --secondary: #ffb6f5;
-  --tertiary: #08aeea;
+    --primary: #d5b6ff;
+    --secondary: #ffb6f5;
+    --tertiary: #08aeea;
 
-  --default-element-color: #213547;
-  --default-background-color: #ffffff;
+    --default-element-color: #213547;
+    --default-background-color: #ffffff;
 }

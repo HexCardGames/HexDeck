@@ -1,5 +1,5 @@
-import { writable } from 'svelte/store';
-import { sessionStore } from './sessionStore';
+import { writable } from "svelte/store";
+import { sessionStore } from "./sessionStore";
 
 export const loading = writable<"join" | "create" | false>(false);
 export const join_error = writable<string | false>(false);
