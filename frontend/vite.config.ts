@@ -1,7 +1,9 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
 import routify from "@roxi/routify/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
+
+const env = loadEnv(process.env.NODE_ENV as string, process.cwd(), "VITE_");
 
 export default defineConfig({
     plugins: [
@@ -15,11 +17,11 @@ export default defineConfig({
         host: true,
         proxy: {
             "/api": {
-                target: "http://10.10.39.145:3000",
+                target: env.VITE_BACKEND_URL || "http://localhost:3000",
                 changeOrigin: true,
             },
             "/socket.io": {
-                target: "http://10.10.39.145:3000",
+                target: env.VITE_BACKEND_URL || "http://localhost:3000",
                 ws: true,
                 changeOrigin: true,
             },
