@@ -1,12 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import {
-        Button,
-        Spinner,
-        InputAddon,
-        ButtonGroup,
-        Helper,
-    } from "flowbite-svelte";
+    import { Button, Spinner, InputAddon, ButtonGroup, Helper } from "flowbite-svelte";
     import { _ } from "svelte-i18n";
     import { loading, join_error, create_error, rejoinRoomCode, rejoinRoomSessionData, requestJoinRoom, requestCreateRoom, joinSession, checkSessionData } from "../stores/roomStore";
 
@@ -21,9 +15,7 @@
             rawValue = rawValue.slice(0, 6);
         }
 
-        let formattedValue = rawValue
-            .replace(/(\d{3})(\d{0,3})/, "$1-$2")
-            .trim();
+        let formattedValue = rawValue.replace(/(\d{3})(\d{0,3})/, "$1-$2").trim();
 
         joinRoomId = formattedValue;
 
@@ -63,17 +55,10 @@
                 class="bg-primary-400 focus:bg-primary-100 dark:bg-primary-800 focus:dark:bg-primary-700 focus:ring-0 text-dark w-full overflow-hidden rounded-xl border-1 border-primary-800"
                 size="lg"
                 disabled={$loading && $loading != "create"}
-                on:click={() =>
-                    joinSession(
-                        $rejoinRoomSessionData?.sessionToken,
-                        $rejoinRoomSessionData?.userId,
-                    )}
+                on:click={() => joinSession($rejoinRoomSessionData?.sessionToken, $rejoinRoomSessionData?.userId)}
             >
                 {#if $loading == "create"}
-                    <Spinner
-                        class="text-primary-350 dark:text-primary-200 me-3"
-                        size="4"
-                    />
+                    <Spinner class="text-primary-350 dark:text-primary-200 me-3" size="4" />
                 {/if}
                 {$_("landing_page.connect_room.rejoin_last_room")}
             </Button>
@@ -102,10 +87,7 @@
                 on:click={() => requestJoinRoom($rejoinRoomCode)}
             >
                 {#if $loading == "create"}
-                    <Spinner
-                        class="text-primary-350 dark:text-primary-200 me-3"
-                        size="4"
-                    />
+                    <Spinner class="text-primary-350 dark:text-primary-200 me-3" size="4" />
                 {/if}
                 {$_("landing_page.connect_room.join_last_room")}
             </Button>
@@ -115,7 +97,8 @@
                         {$_(`error_messages.${$create_error}`, {
                             default: $_("error_messages.error_message", {
                                 values: { error_message: $create_error },
-                            })})}
+                            }),
+                        })}
                     </span>
                 </Helper>
             {/if}
@@ -125,19 +108,11 @@
         </div>
     {/if}
     <div class="mb-4">
-        <ButtonGroup
-            class="w-full overflow-hidden rounded-xl border-1 border-primary-800"
-            size="sm"
-        >
-            <InputAddon
-                class="w-10 text-center bg-primary-400 dark:bg-primary-800"
-            >
+        <ButtonGroup class="w-full overflow-hidden rounded-xl border-1 border-primary-800" size="sm">
+            <InputAddon class="w-10 text-center bg-primary-400 dark:bg-primary-800">
                 {#if $loading == "join"}
                     <div class="w-full flex justify-center">
-                        <Spinner
-                            class="text-primary-350 dark:text-primary-200"
-                            size="4.2"
-                        />
+                        <Spinner class="text-primary-350 dark:text-primary-200" size="4.2" />
                     </div>
                 {:else}
                     <span class="w-full"> # </span>
@@ -161,8 +136,8 @@
                     {$_(`error_messages.${$join_error}`, {
                         default: $_("error_messages.error_message", {
                             values: { error_message: $join_error },
-                        })}
-                    )}
+                        }),
+                    })}
                 </span>
             </Helper>
         {/if}
@@ -178,10 +153,7 @@
             on:click={requestCreateRoom}
         >
             {#if $loading == "create"}
-                <Spinner
-                    class="text-primary-350 dark:text-primary-200 me-3"
-                    size="4"
-                />
+                <Spinner class="text-primary-350 dark:text-primary-200 me-3" size="4" />
             {/if}
             {$_("landing_page.connect_room.create_a_room")}
         </Button>
@@ -191,7 +163,8 @@
                     {$_(`error_messages.${$create_error}`, {
                         default: $_("error_messages.error_message", {
                             values: { error_message: $create_error },
-                        })})}
+                        }),
+                    })}
                 </span>
             </Helper>
         {/if}

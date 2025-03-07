@@ -30,14 +30,8 @@
     <div class="flex justify-center">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <!-- Open source container -->
-            <div
-                class="p-4 bg-primary-50 dark:bg-primary-950 rounded-xl grid content-start justify-items-center w-3xs text-center space-y-2 border-1 border-primary-200 dark:border-primary-800"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="48"
-                    height="48"
-                    viewBox="0 0 24 24"
+            <div class="p-4 bg-primary-50 dark:bg-primary-950 rounded-xl grid content-start justify-items-center w-3xs text-center space-y-2 border-1 border-primary-200 dark:border-primary-800">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
                     ><path
                         fill="none"
                         stroke="currentColor"
@@ -51,12 +45,7 @@
                     {$_("landing_page.open_source_container.title")}
                 </h4>
                 <span>{$_("landing_page.open_source_container.content")}</span>
-                <GradientButton
-                    color="purpleToBlue"
-                    class="opacity-75 focus:opacity-100 focus:ring-0"
-                    href="https://github.com/HexCardGames/HexDeck"
-                    target="_blank"
-                >
+                <GradientButton color="purpleToBlue" class="opacity-75 focus:opacity-100 focus:ring-0" href="https://github.com/HexCardGames/HexDeck" target="_blank">
                     {$_("landing_page.open_source_container.github")}
                 </GradientButton>
             </div>

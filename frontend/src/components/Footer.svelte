@@ -1,8 +1,8 @@
 <script>
     import { Banner, Button, Tooltip } from "flowbite-svelte";
     import { ArrowUpFromLine, Dot } from "lucide-svelte";
-    import { slide } from 'svelte/transition';
-    import { quintOut } from 'svelte/easing';
+    import { slide } from "svelte/transition";
+    import { quintOut } from "svelte/easing";
     import { _ } from "svelte-i18n";
 
     let bannerStatus = true;
@@ -25,5 +25,5 @@
     <Button on:click={showFooter} class="!p-2 focus:ring-0 mt-2" color="none">
         <ArrowUpFromLine />
     </Button>
-    <Tooltip type='auto'>{$_("landing_page.show_footer")}</Tooltip>
+    <Tooltip type="auto">{$_("landing_page.show_footer")}</Tooltip>
 </div>

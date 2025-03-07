@@ -32,7 +32,7 @@
         debounceTimer = setTimeout(() => {
             sessionStore.renamePlayer(playerId, newName);
             isLoading = false;
-            unfocusInput()
+            unfocusInput();
         }, 1800);
     }
 
@@ -57,29 +57,25 @@
     role="button"
     tabindex="0"
     on:click={focusInput}
-    on:keydown={(event) => { if (event.key === 'Enter' || event.key === ' ') focusInput(); }}>
+    on:keydown={(event) => {
+        if (event.key === "Enter" || event.key === " ") focusInput();
+    }}
+>
     <div class="grid justify-items-start w-full">
         {#if playerId == sessionStore.getUserId()}
-        <span class="text-sm">{$_("lobby.rename_yourself")}</span>
+            <span class="text-sm">{$_("lobby.rename_yourself")}</span>
         {:else}
-        <span class="text-sm">{$_("lobby.rename_player")}</span>
+            <span class="text-sm">{$_("lobby.rename_player")}</span>
         {/if}
 
         <!-- Rename Player -->
         <div class="w-full">
-            <input
-                class="text-black w-full dark:text-white mr-md w-full border-0 focus:outline-none focus:ring-0 h-8 bg-transparent"
-                bind:value={playerName}
-                on:input={onInput}
-                bind:this={inputRef}
-            />
+            <input class="text-black w-full dark:text-white mr-md w-full border-0 focus:outline-none focus:ring-0 h-8 bg-transparent" bind:value={playerName} on:input={onInput} bind:this={inputRef} />
         </div>
     </div>
     {#if isLoading}
-    <div class="">
-        <Spinner
-            class="text-primary-350 w-8 h-8 dark:text-primary-200"
-        />
-    </div>
-{/if}
+        <div class="">
+            <Spinner class="text-primary-350 w-8 h-8 dark:text-primary-200" />
+        </div>
+    {/if}
 </div>

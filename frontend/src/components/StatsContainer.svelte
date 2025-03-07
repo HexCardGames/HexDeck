@@ -7,15 +7,15 @@
         online_player_count: null,
         current_game_rooms: null,
         games_played: null,
-    }
+    };
 
     async function getStats() {
         try {
             const res = await fetch("/api/stats");
             const resJson = await res.json();
-            stats.online_player_count = resJson?.OnlinePlayerCount
-            stats.current_game_rooms = resJson?.RunningGames
-            stats.games_played = resJson?.TotalGamesPlayed
+            stats.online_player_count = resJson?.OnlinePlayerCount;
+            stats.current_game_rooms = resJson?.RunningGames;
+            stats.games_played = resJson?.TotalGamesPlayed;
         } catch {}
     }
 
@@ -25,11 +25,11 @@
         getStats();
         // Request stats update every 10s
         getStateInterval = setInterval(getStats, 10 * 60 * 1000);
-    })
+    });
 
     onDestroy(() => {
         clearInterval(getStateInterval);
-    })
+    });
 </script>
 
 <div class="p-4 bg-primary-50 dark:bg-primary-950 rounded-xl grid content-start justify-items-center w-3xs text-center space-y-2 border-1 border-primary-200 dark:border-primary-800">

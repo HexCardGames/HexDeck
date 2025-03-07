@@ -4,7 +4,7 @@
     import { _ } from "svelte-i18n";
     import Markdown from "svelte-exmarkdown";
     import { onMount } from "svelte";
-    import { goto } from '@roxi/routify'
+    import { goto } from "@roxi/routify";
 
     // Reactive stores for better state management
     let md: string = "";

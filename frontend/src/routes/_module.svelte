@@ -20,11 +20,7 @@
         <div class="middle-header-group header-group"></div>
         <div class="right-header-group header-group gap-2">
             <!-- Theme btn -->
-            <Button
-                on:click={toggleTheme}
-                class="!p-2 mt-2 rounded-full focus:bg-primary-700 hover:bg-primary-600 focus:ring-0"
-                color="none"
-            >
+            <Button on:click={toggleTheme} class="!p-2 mt-2 rounded-full focus:bg-primary-700 hover:bg-primary-600 focus:ring-0" color="none">
                 {#if $theme === "dark"}
                     <Moon size="2rem" />
                 {:else if $theme === "light"}
