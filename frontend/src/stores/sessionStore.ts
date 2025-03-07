@@ -286,7 +286,7 @@ class SessionManager {
     this.store.set({
       roomId: null,
       joinCode: null,
-      gameState: 0,
+      gameState: -1,
       gameOptions: {},
       players: [],
       cardDeckId: null,
