@@ -22,7 +22,11 @@ func main() {
 		slog.Error("MONGO_URI environment variable not set!")
 		return
 	}
-	db.InitDB(mongoUri)
+	ok := db.InitDB(mongoUri)
+	if !ok {
+		slog.Error("Initializing MongoDB database failed")
+		return
+	}
 	game.LoadRooms()
 
 	roomTicker := time.NewTicker(1 * time.Second)
