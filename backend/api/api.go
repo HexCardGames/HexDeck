@@ -1,16 +1,12 @@
 package api
 
 import (
-	"fmt"
-	"log"
 	"log/slog"
 	"net/http"
-	"strconv"
 
 	"github.com/HexCardGames/HexDeck/db"
 	"github.com/HexCardGames/HexDeck/game"
 	"github.com/HexCardGames/HexDeck/types"
-	"github.com/HexCardGames/HexDeck/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -37,10 +33,7 @@ type LeaveRoomRequest struct {
 	SessionToken string
 }
 
-func InitApi() {
-	server := gin.Default()
-	server.SetTrustedProxies(nil)
-
+func RegisterApi(server *gin.Engine) {
 	server.GET("/api/stats", func(c *gin.Context) {
 		stats := game.CalculateStats()
 		c.JSON(http.StatusOK, StatsReply{
@@ -142,12 +135,4 @@ func InitApi() {
 	// Handle WebSocket connections using Socket.io
 	wsHandler := initWS()
 	server.Any("/socket.io/", gin.WrapH(wsHandler))
-
-	listenHost := utils.Getenv("LISTEN_HOST", "0.0.0.0")
-	listenPort, err := strconv.Atoi(utils.Getenv("LISTEN_PORT", "3000"))
-	if err != nil {
-		log.Fatal("Value of variable PORT is not a valid integer!")
-	}
-	slog.Info(fmt.Sprintf("HexDeck server listening on http://%s:%d", listenHost, listenPort))
-	server.Run(fmt.Sprintf("%s:%d", listenHost, listenPort))
 }

@@ -70,13 +70,22 @@ func (conn *DatabaseConnection) QueryGlobalStats() GlobalStatsCollection {
 	return stats
 }
 
-func CreateDBConnection(uri string) DatabaseConnection {
-	client, _ := mongo.Connect(options.Client().ApplyURI(uri))
-	return DatabaseConnection{client}
+func CreateDBConnection(uri string) *DatabaseConnection {
+	client, err := mongo.Connect(options.Client().ApplyURI(uri))
+	if err != nil {
+		slog.Error("MongoDB connection failed", "error", err)
+		return nil
+	}
+	return &DatabaseConnection{client}
 }
 
 var Conn DatabaseConnection
 
-func InitDB(uri string) {
-	Conn = CreateDBConnection(uri)
+func InitDB(uri string) bool {
+	dbConn := CreateDBConnection(uri)
+	if dbConn == nil {
+		return false
+	}
+	Conn = *dbConn
+	return true
 }
