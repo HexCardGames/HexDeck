@@ -64,6 +64,10 @@ func unpackData(datas []any, target interface{}) bool {
 }
 
 func verifyPlayerIsActivePlayer(room *types.Room, target *types.Player) bool {
+	if target.Connection.Socket == nil {
+		return false
+	}
+
 	if room.GameState != types.StateRunning {
 		target.Connection.Socket.Emit("Status", types.S2C_Status{
 			IsError:    true,

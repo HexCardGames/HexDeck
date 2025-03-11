@@ -141,6 +141,9 @@ func OnPlayerStateUpdate(room *types.Room, player *types.Player, skipDBUpdate bo
 	if !skipDBUpdate {
 		db.Conn.UpdateRoom(room)
 	}
+	if player.Connection.Socket == nil {
+		return
+	}
 	player.Connection.Socket.Emit("OwnCards", types.BuildOwnCardsPacket(room, player))
 	BroadcastInRoom(room, "PlayerState", types.BuildPlayerStatePacket(room, player))
 }
