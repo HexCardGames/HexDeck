@@ -1,0 +1,16 @@
+services:
+  mongodb:
+    user: "1000"
+    volumes:
+      - ./data/mongodb/:/data/db/
+    image: mongodb/mongodb-community-server:latest
+    command: mongod --bind_ip_all
+  hexdeck:
+    user: "1000"
+    ports:
+      - 3000:3000
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/
+    depends_on:
+      - mongodb
+    build: .
