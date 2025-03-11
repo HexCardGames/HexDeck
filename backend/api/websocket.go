@@ -174,6 +174,7 @@ func onPlayerJoin(client *socket.Socket, room *types.Room, player *types.Player)
 					StatusCode: "player_kicked",
 					Message:    "You were kicked from the room",
 				})
+				targetPlayer.Connection.Socket.Disconnect(true)
 			}
 		}
 		if player == targetPlayer {
