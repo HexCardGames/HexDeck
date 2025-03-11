@@ -7,7 +7,6 @@ import (
 
 	"github.com/HexCardGames/HexDeck/game"
 	"github.com/HexCardGames/HexDeck/types"
-	"github.com/zishang520/socket.io/v2/socket"
 	socketio "github.com/zishang520/socket.io/v2/socket"
 )
 
@@ -17,7 +16,7 @@ func initWS() http.Handler {
 	io = socketio.NewServer(nil, nil)
 
 	io.On("connection", func(clients ...any) {
-		client := clients[0].(*socket.Socket)
+		client := clients[0].(*socketio.Socket)
 		remoteAddr := client.Request().Request().RemoteAddr
 
 		sessionToken, exists := client.Request().Query().Get("sessionToken")
@@ -88,7 +87,7 @@ func verifyPlayerIsActivePlayer(room *types.Room, target *types.Player) bool {
 	return true
 }
 
-func onPlayerJoin(client *socket.Socket, room *types.Room, player *types.Player) {
+func onPlayerJoin(client *socketio.Socket, room *types.Room, player *types.Player) {
 	client.On("disconnect", func(...any) {
 		player.Connection.IsConnected = false
 		player.Connection.Socket = nil
