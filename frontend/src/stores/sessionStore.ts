@@ -1,4 +1,4 @@
-import { writable, get } from "svelte/store";
+import { writable, get, derived } from "svelte/store";
 import { io, Socket } from "socket.io-client";
 
 export enum GameState {
@@ -14,7 +14,7 @@ interface PlayerPermissionObj {
 
 interface GameOptions {}
 
-interface PlayerObj {
+export interface PlayerObj {
     PlayerId: string;
     Username: string;
     Permissions: number;
@@ -26,19 +26,21 @@ interface SessionData {
     joinCode: string | null;
     gameOptions: GameOptions;
     players: Array<PlayerObj>;
-    cardDeckId: string | null;
+    cardDeckId: number | null;
     gameState: GameState;
     socket: Socket | null;
     connected: boolean;
     userId: string | null;
-    messages: string[];
+    messages: any[];
     sessionToken: string | null;
+    playedCards: CardPlayedObj[];
+    ownCards: CardInfoObj[];
+    playerStates: { [key: string]: PlayerStateObj };
 }
-
 interface RoomInfoObj {
     RoomId: string;
     JoinCode: string;
-    TopCard: any;
+    TopCard: Card;
     GameState: GameState;
     CardDeckId: number;
     Winner?: string;
@@ -51,8 +53,45 @@ interface StatusInfoObj {
     Message: string;
 }
 
+export interface CardInfoObj {
+    CanPlay: boolean;
+    Card: Card;
+}
+
+interface OwnCardsObj {
+    Cards: CardInfoObj[];
+}
+
+export interface PlayerStateObj {
+    PlayerId: string;
+    NumCards: number;
+    Active: boolean;
+}
+
+export interface CardPlayedObj {
+    Card: Card;
+    CardIndex: number;
+    PlayedBy: string;
+}
+
+interface PlayedCardUpdateObj {
+    UpdatedBy: string;
+    Card: Card;
+}
+
+interface PlayCardReq {
+    CardIndex?: number;
+    CardData: any;
+}
+
+interface UpdatePlayedCardReq {
+    CardData: any;
+}
+
+export type Card = any;
+
 class SessionManager {
-    private store = writable<SessionData>({
+    store = writable<SessionData>({
         roomId: null,
         joinCode: null,
         gameState: -1,
@@ -64,6 +103,9 @@ class SessionManager {
         userId: null,
         messages: [],
         sessionToken: null,
+        playedCards: [],
+        ownCards: [],
+        playerStates: {},
     });
 
     private socket: Socket | null = null;
@@ -184,6 +226,10 @@ class SessionManager {
             if (!userId) userId = storedSessionIds?.userId;
         }
 
+        if (!sessionToken || !userId) {
+            console.warn("Socket connection requested without sessionToken or userId");
+            return;
+        }
         if (this.socket) {
             console.warn(`Socket already connected! Rejecting new connection to ${sessionToken}`);
             return;
@@ -202,6 +248,10 @@ class SessionManager {
         this.socket?.on("disconnect", this.handleDisconnect.bind(this));
         this.socket?.on("Status", this.handleStatus.bind(this));
         this.socket?.on("RoomInfo", this.handleRoomInfo.bind(this));
+        this.socket?.on("OwnCards", this.handleOwnCardsUpdate.bind(this));
+        this.socket?.on("PlayerState", this.handlePlayerStateUpdate.bind(this));
+        this.socket?.on("CardPlayed", this.handleCardPlayed.bind(this));
+        this.socket?.on("PlayedCardUpdate", this.handlePlayedCardUpdate.bind(this));
         this.socket?.on("error", this.handleError.bind(this));
     }
 
@@ -248,6 +298,12 @@ class SessionManager {
             cardDeckId: message.CardDeckId,
             players: message.Players,
         }));
+        if (message.TopCard && get(this.store).playedCards.length == 0) {
+            this.store.update((state) => ({
+                ...state,
+                playedCards: [{ Card: message.TopCard, CardIndex: -1, PlayedBy: "" }],
+            }));
+        }
         this.saveJoinCode();
         this.store.update((state) => ({
             ...state,
@@ -255,14 +311,76 @@ class SessionManager {
         }));
     }
 
+    private handleOwnCardsUpdate(message: OwnCardsObj) {
+        this.store.update((state) => ({
+            ...state,
+            ownCards: message.Cards,
+        }));
+    }
+
+    private handlePlayerStateUpdate(message: PlayerStateObj) {
+        get(this.store).playerStates[message.PlayerId] = message;
+        this.store.update((state) => state);
+    }
+
+    private handleCardPlayed(message: CardPlayedObj) {
+        this.store.update((state) => ({
+            ...state,
+            playedCards: [...state.playedCards, message],
+        }));
+    }
+
+    private handlePlayedCardUpdate(message: PlayedCardUpdateObj) {
+        if (get(this.store).playedCards.length == 0) {
+            return;
+        }
+        get(this.store).playedCards[get(this.store).playedCards.length - 1].Card = message.Card;
+        this.store.update((state) => state);
+    }
+
     private handleError(error: string) {
         console.error("Socket error:", error);
     }
 
-    sendMessage(message: string) {
-        if (this.socket && message.trim()) {
-            this.socket.emit("event", message);
+    get players(): PlayerObj[] {
+        return get(this.store).players;
+    }
+
+    get ownCards(): Card[] {
+        return get(this.store).ownCards;
+    }
+
+    get playedCards(): CardPlayedObj[] {
+        return get(this.store).playedCards;
+    }
+
+    getPlayerState(playerId: string): PlayerStateObj | undefined {
+        return get(this.store).playerStates[playerId];
+    }
+
+    sendMessage(event: string, message: string) {
+        if (this.socket) {
+            this.socket.emit(event, message);
         }
+    }
+
+    drawCard() {
+        this.sendMessage("DrawCard", "");
+    }
+
+    playCard(cardIndex: number, data?: any) {
+        let request: PlayCardReq = {
+            CardIndex: cardIndex,
+            CardData: data,
+        };
+        this.sendMessage("PlayCard", JSON.stringify(request));
+    }
+
+    updatePlayedCard(data?: any) {
+        let request: UpdatePlayedCardReq = {
+            CardData: data,
+        };
+        this.sendMessage("UpdatePlayedCard", JSON.stringify(request));
     }
 
     leaveRoom() {
@@ -295,6 +413,9 @@ class SessionManager {
             userId: null,
             messages: [],
             sessionToken: null,
+            playedCards: [],
+            ownCards: [],
+            playerStates: {},
         });
         window.history.replaceState({}, "", "/");
     }

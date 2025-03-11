@@ -1,7 +1,7 @@
 <script lang="ts">
-    import EndScreen from "./../components/Game/EndScreen.svelte";
-    import Main from "./../components/Game/Main.svelte";
-    import Lobby from "../components/Game/Lobby.svelte";
+    import EndScreen from "./../views/Game/EndScreen.svelte";
+    import Main from "./../views/Game/Main.svelte";
+    import Lobby from "../views/Game/Lobby.svelte";
     import { _ } from "svelte-i18n";
     import { onMount } from "svelte";
     import { GameState, sessionStore } from "../stores/sessionStore";

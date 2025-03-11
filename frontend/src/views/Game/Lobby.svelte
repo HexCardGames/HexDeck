@@ -1,5 +1,5 @@
 <script lang="ts">
-    import RenamePlayer from "./../RenamePlayer.svelte";
+    import RenamePlayer from "../../components/RenamePlayer.svelte";
     import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, TableSearch, Badge, Button, Modal, Popover, Tooltip } from "flowbite-svelte";
     import { CircleArrowOutUpLeft, Copy, AlertCircle, UserX, Play, TextCursorInput, Gamepad2 } from "lucide-svelte";
     import { _ } from "svelte-i18n";
