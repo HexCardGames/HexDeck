@@ -49,7 +49,7 @@
                     canPlayCards={false}
                     canUpdateCards={true}
                     updateCard={(_, data) => {
-                        sessionStore.updatePlayedCard(data);
+                        if (get(playerActive)) sessionStore.updatePlayedCard(data);
                     }}
                     cards={[{ Card: undefined, PlayedBy: "", CardIndex: -1 }, ...$sessionStore.playedCards]}
                     centerDistancePx={0}
