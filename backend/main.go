@@ -1,15 +1,23 @@
 package main
 
 import (
+	"embed"
+	"fmt"
+	"log"
 	"log/slog"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/HexCardGames/HexDeck/api"
 	"github.com/HexCardGames/HexDeck/db"
 	"github.com/HexCardGames/HexDeck/game"
 	"github.com/HexCardGames/HexDeck/utils"
+	"github.com/gin-gonic/gin"
 )
+
+//go:embed all:public/*
+var public embed.FS
 
 func main() {
 	logHandler := slog.NewTextHandler(os.Stderr, &slog.HandlerOptions{
@@ -39,5 +47,17 @@ func main() {
 		}
 	}()
 
-	api.InitApi()
+	server := gin.Default()
+	server.SetTrustedProxies(nil)
+
+	api.RegisterApi(server)
+	server.Use(api.SPAMiddleware(public, "public", "/"))
+
+	listenHost := utils.Getenv("LISTEN_HOST", "0.0.0.0")
+	listenPort, err := strconv.Atoi(utils.Getenv("LISTEN_PORT", "3000"))
+	if err != nil {
+		log.Fatal("Value of variable PORT is not a valid integer!")
+	}
+	slog.Info(fmt.Sprintf("HexDeck server listening on http://%s:%d", listenHost, listenPort))
+	server.Run(fmt.Sprintf("%s:%d", listenHost, listenPort))
 }
