@@ -132,6 +132,16 @@ func BroadcastInRoom(room *types.Room, topic string, data interface{}) {
 	}
 }
 
+func SendInitialData(room *types.Room, targetPlayer *types.Player) {
+	if targetPlayer.Connection.Socket == nil {
+		return
+	}
+	targetPlayer.Connection.Socket.Emit("OwnCards", types.BuildOwnCardsPacket(room, targetPlayer))
+	for _, player := range room.Players {
+		targetPlayer.Connection.Socket.Emit("PlayerState", types.BuildPlayerStatePacket(room, player))
+	}
+}
+
 func OnRoomUpdate(room *types.Room) {
 	db.Conn.UpdateRoom(room)
 	BroadcastInRoom(room, "RoomInfo", types.BuildRoomInfoPacket(room))

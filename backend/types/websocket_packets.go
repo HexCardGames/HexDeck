@@ -103,7 +103,11 @@ func BuildOwnCardsPacket(room *Room, player *Player) S2C_OwnCards {
 }
 
 func BuildPlayerStatePacket(room *Room, player *Player) S2C_PlayerState {
-	return S2C_PlayerState{PlayerId: player.PlayerId, NumCards: len(player.Cards), Active: room.CardDeck.IsPlayerActive(player)}
+	isActivePlayer := false
+	if room.CardDeck != nil && room.CardDeck.IsPlayerActive(player) {
+		isActivePlayer = true
+	}
+	return S2C_PlayerState{PlayerId: player.PlayerId, NumCards: len(player.Cards), Active: isActivePlayer}
 }
 func BuildCardPlayedPacket(player *Player, cardIndex int, card Card) S2C_CardPlayed {
 	return S2C_CardPlayed{Card: card, CardIndex: cardIndex, PlayedBy: player.PlayerId}

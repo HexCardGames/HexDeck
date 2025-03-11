@@ -286,4 +286,6 @@ func onPlayerJoin(client *socketio.Socket, room *types.Room, player *types.Playe
 		}
 		game.OnPlayedCardUpdate(room, player, card)
 	})
+
+	game.SendInitialData(room, player)
 }
