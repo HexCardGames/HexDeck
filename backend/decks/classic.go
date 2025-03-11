@@ -44,6 +44,14 @@ func (deck *Classic) Init(room *types.Room) {
 	}
 	utils.ShuffleSlice(&cards)
 	deck.CardsRemaining = cards
+
+	deck.room.PlayersMutex.Lock()
+	defer deck.room.PlayersMutex.Unlock()
+	for _, player := range deck.room.Players {
+		player.Mutex.Lock()
+		defer player.Mutex.Unlock()
+		deck.drawMany(player, 7)
+	}
 }
 
 func (deck *Classic) SetRoom(room *types.Room) {
@@ -74,6 +82,12 @@ func (deck *Classic) drawCard(player *types.Player) types.Card {
 	deck.CardsRemaining = deck.CardsRemaining[1:]
 	player.Cards = append(player.Cards, card)
 	return card
+}
+
+func (deck *Classic) drawMany(player *types.Player, cards int) {
+	for i := 0; i < cards; i++ {
+		deck.drawCard(player)
+	}
 }
 
 func (deck *Classic) getActivePlayer() int {
