@@ -28,6 +28,7 @@ func (serializable *SerializablePlayer) ToPlayer(cardDeckId int) types.Player {
 		Permissions:  serializable.Permissions,
 		Connection:   types.WebsocketConnection{IsConnected: false},
 		Cards:        cards,
+		Mutex:        &sync.Mutex{},
 	}
 	player.ResetInactivity()
 	return player

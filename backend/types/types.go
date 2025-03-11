@@ -35,6 +35,7 @@ type Player struct {
 	Cards             []Card              `json:"-"`
 	Connection        WebsocketConnection `bson:"-" json:"-"`
 	InactivityTimeout int                 `bson:"-" json:"-"`
+	Mutex             *sync.Mutex
 }
 
 func (player *Player) ResetInactivity() {
@@ -93,6 +94,9 @@ func (room *Room) AppendPlayer(player *Player) {
 func (room *Room) RemovePlayer(target Player) bool {
 	room.PlayersMutex.Lock()
 	defer room.PlayersMutex.Unlock()
+	target.Mutex.Lock()
+	defer target.Mutex.Unlock()
+
 	return room.RemovePlayerUnsafe(target)
 }
 

@@ -93,6 +93,9 @@ func onPlayerJoin(client *socket.Socket, room *types.Room, player *types.Player)
 	})
 
 	client.On("UpdatePlayer", func(datas ...any) {
+		player.Mutex.Lock()
+		defer player.Mutex.Unlock()
+
 		updatePlayerRequest := types.C2S_UpdatePlayer{}
 		unpackData(datas, &updatePlayerRequest)
 		if updatePlayerRequest.PlayerId != player.PlayerId && !player.HasPermissionBit(types.PermissionHost) {
@@ -114,6 +117,10 @@ func onPlayerJoin(client *socket.Socket, room *types.Room, player *types.Player)
 		}
 		slog.Debug("Updating player data", "roomId", room.RoomId, "playerId", updatePlayerRequest.PlayerId, "username", targetPlayer.Username, "request", updatePlayerRequest)
 
+		if player != targetPlayer {
+			targetPlayer.Mutex.Lock()
+			defer targetPlayer.Mutex.Unlock()
+		}
 		if updatePlayerRequest.Username != nil {
 			if room.IsUsernameAvailable(*updatePlayerRequest.Username) {
 				targetPlayer.Username = *updatePlayerRequest.Username
@@ -133,6 +140,9 @@ func onPlayerJoin(client *socket.Socket, room *types.Room, player *types.Player)
 	})
 
 	client.On("KickPlayer", func(datas ...any) {
+		player.Mutex.Lock()
+		defer player.Mutex.Unlock()
+
 		kickPlayerRequest := types.C2S_KickPlayer{}
 		unpackData(datas, &kickPlayerRequest)
 		if !player.HasPermissionBit(types.PermissionHost) {
@@ -153,6 +163,9 @@ func onPlayerJoin(client *socket.Socket, room *types.Room, player *types.Player)
 			return
 		}
 
+		if player == targetPlayer {
+			player.Mutex.Unlock()
+		}
 		if room.RemovePlayer(*targetPlayer) {
 			slog.Debug("Player was kicked from room", "playerId", player.PlayerId, "targetPlayerId", kickPlayerRequest.PlayerId, "roomId", room.RoomId)
 			if targetPlayer.Connection.IsConnected && targetPlayer.Connection.Socket != nil {
@@ -162,6 +175,9 @@ func onPlayerJoin(client *socket.Socket, room *types.Room, player *types.Player)
 					Message:    "You were kicked from the room",
 				})
 			}
+		}
+		if player == targetPlayer {
+			player.Mutex.Lock()
 		}
 		game.OnRoomUpdate(room)
 	})
@@ -187,6 +203,9 @@ func onPlayerJoin(client *socket.Socket, room *types.Room, player *types.Player)
 	})
 
 	client.On("DrawCard", func(datas ...any) {
+		player.Mutex.Lock()
+		defer player.Mutex.Unlock()
+
 		if !verifyPlayerIsActivePlayer(room, player) {
 			return
 		}
@@ -199,6 +218,9 @@ func onPlayerJoin(client *socket.Socket, room *types.Room, player *types.Player)
 	})
 
 	client.On("PlayCard", func(datas ...any) {
+		player.Mutex.Lock()
+		defer player.Mutex.Unlock()
+
 		if !verifyPlayerIsActivePlayer(room, player) {
 			return
 		}
@@ -240,6 +262,9 @@ func onPlayerJoin(client *socket.Socket, room *types.Room, player *types.Player)
 	})
 
 	client.On("UpdatePlayedCard", func(datas ...any) {
+		player.Mutex.Lock()
+		defer player.Mutex.Unlock()
+
 		if !verifyPlayerIsActivePlayer(room, player) {
 			return
 		}

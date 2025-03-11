@@ -87,6 +87,7 @@ func JoinRoom(room *types.Room, requestedUsername string) *types.Player {
 		Connection: types.WebsocketConnection{
 			IsConnected: false,
 		},
+		Mutex: &sync.Mutex{},
 	}
 	player.ResetInactivity()
 	room.AppendPlayer(player)
