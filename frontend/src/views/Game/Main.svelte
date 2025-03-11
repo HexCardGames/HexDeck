@@ -32,7 +32,12 @@
         </div>
         <div class="center grid grid-cols-2">
             <div class="drawCard flex justify-center items-center">
-                <button class="draw" on:click={() => sessionStore.drawCard()}>
+                <button
+                    class="draw"
+                    on:click={() => {
+                        if (get(playerActive)) sessionStore.drawCard();
+                    }}
+                >
                     <svelte:component this={cardComponent} width={cardWidth} height={cardHeight} data={{ Color: "black", Symbol: "special:draw" }} />
                 </button>
             </div>

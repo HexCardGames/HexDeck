@@ -218,7 +218,7 @@ func onPlayerJoin(client *socketio.Socket, room *types.Room, player *types.Playe
 			// TODO: Handle empty card deck
 			return
 		}
-		game.OnPlayerStateUpdate(room, player, false)
+		game.UpdateAllPlayers(room)
 	})
 
 	client.On("PlayCard", func(datas ...any) {
