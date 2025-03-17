@@ -124,7 +124,7 @@ func (deck *Classic) CanPlay(card types.Card) bool {
 	if topCard == nil || checkCard == nil {
 		return topCard == nil
 	}
-	return checkCard.Color == "black" || checkCard.Color == topCard.Color || checkCard.Symbol == topCard.Symbol
+	return topCard.Color != "black" && (checkCard.Color == "black" || checkCard.Color == topCard.Color || checkCard.Symbol == topCard.Symbol)
 }
 
 func (deck *Classic) PlayCard(card types.Card) bool {
