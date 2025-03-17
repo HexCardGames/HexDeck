@@ -66,8 +66,6 @@
             <Main />
         </div>
     {:else if $sessionStore.gameState == GameState.Ended}
-        <div>
-            <EndScreen />
-        </div>
+        <EndScreen />
     {/if}
 {/if}

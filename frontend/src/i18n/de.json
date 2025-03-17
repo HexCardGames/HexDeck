@@ -71,6 +71,13 @@
         "host": "Host",
         "you": "Du"
     },
+    "end_screen": {
+        "game_has_ended": "Das Spiel ist vorbei",
+        "player_won_the_game": "{player_name} hat das Spiel gewonnen!",
+        "you_won_the_game": "Du hast das Spiel gewonnen!",
+        "go_back": "Zurück",
+        "play_again": "Erneut spielen"
+    },
     "player_status": {
         "connected": "Verbunden",
         "disconnected": "Getrennt"

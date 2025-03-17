@@ -36,6 +36,7 @@ interface SessionData {
     playedCards: CardPlayedObj[];
     ownCards: CardInfoObj[];
     playerStates: { [key: string]: PlayerStateObj };
+    winner: string | undefined;
 }
 interface RoomInfoObj {
     RoomId: string;
@@ -106,6 +107,7 @@ class SessionManager {
         playedCards: [],
         ownCards: [],
         playerStates: {},
+        winner: undefined,
     });
 
     private socket: Socket | null = null;
@@ -297,6 +299,7 @@ class SessionManager {
             gameState: message.GameState,
             cardDeckId: message.CardDeckId,
             players: message.Players,
+            winner: message.Winner,
         }));
         if (message.TopCard && get(this.store).playedCards.length == 0) {
             this.store.update((state) => ({
@@ -416,6 +419,7 @@ class SessionManager {
             playedCards: [],
             ownCards: [],
             playerStates: {},
+            winner: undefined,
         });
         window.history.replaceState({}, "", "/");
     }

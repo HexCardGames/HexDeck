@@ -73,6 +73,13 @@
         "player": "Player",
         "return_to_game": "Return to game"
     },
+    "end_screen": {
+        "game_has_ended": "The game has ended",
+        "player_won_the_game": "{player_name} has won the game!",
+        "you_won_the_game": "You have won the game!",
+        "go_back": "Go back",
+        "play_again": "Play again"
+    },
     "player_status": {
         "connected": "Connected",
         "disconnected": "Disconnected"
