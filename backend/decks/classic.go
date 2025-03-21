@@ -17,10 +17,7 @@ type Classic struct {
 
 var ClassicColors = []string{"red", "yellow", "blue", "green"}
 
-func (deck *Classic) Init(room *types.Room) {
-	deck.room = room
-	deck.DirectionReversed = false
-	deck.ActivePlayer = 0
+func (deck *Classic) fillDeck() {
 	cards := make([]*ClassicCard, 108)
 	offset := 0
 	for i := 0; i < 4; i++ {
@@ -44,6 +41,13 @@ func (deck *Classic) Init(room *types.Room) {
 	}
 	utils.ShuffleSlice(&cards)
 	deck.CardsRemaining = cards
+}
+
+func (deck *Classic) Init(room *types.Room) {
+	deck.room = room
+	deck.DirectionReversed = false
+	deck.ActivePlayer = 0
+	deck.fillDeck()
 
 	deck.room.PlayersMutex.Lock()
 	defer deck.room.PlayersMutex.Unlock()
@@ -59,7 +63,10 @@ func (deck *Classic) SetRoom(room *types.Room) {
 }
 
 func (deck *Classic) IsEmpty() bool {
-	return len(deck.CardsRemaining) == 0
+	if len(deck.CardsRemaining) == 0 {
+		deck.fillDeck()
+	}
+	return false
 }
 
 func (deck *Classic) getTopCard() *ClassicCard {
@@ -143,11 +150,7 @@ func (deck *Classic) PlayCard(card types.Card) bool {
 			amount = 4
 		}
 		for range amount {
-			card := deck.drawCard(targetPlayer)
-			if card == nil {
-				// TODO: Handle empty card deck
-				break
-			}
+			deck.drawCard(targetPlayer)
 		}
 	} else if deckCard.Symbol == "action:reverse" {
 		deck.DirectionReversed = !deck.DirectionReversed
