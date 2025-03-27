@@ -39,7 +39,7 @@ func CreateRoom() *types.Room {
 		GameState:    types.StateLobby,
 		Players:      make([]*types.Player, 0),
 		PlayersMutex: &sync.Mutex{},
-		CardDeckId:   0,
+		CardDeckId:   1,
 	}
 
 	db.Conn.InsertRoom(newRoom)
