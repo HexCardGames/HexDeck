@@ -277,12 +277,12 @@ class SessionManager {
 
     private handleStatus(message: StatusInfoObj) {
         console.log("Status: ", message);
-        if (message.IsError && message.StatusCode !== "connection_from_different_socket") {
-            this.leaveRoom();
-        }
-        if (message.IsError) {
+        if (message.StatusCode == "connection_from_different_socket") {
             this.socket = null;
             window.history.replaceState({}, "", "/");
+        }
+        if (message.IsError) {
+            console.warn("Received error from server: ", message);
         }
         this.store.update((state) => ({
             ...state,
