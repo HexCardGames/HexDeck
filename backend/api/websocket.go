@@ -248,7 +248,7 @@ func onPlayerJoin(client *socketio.Socket, room *types.Room, player *types.Playe
 			return
 		}
 		card := player.Cards[*updatePlayerRequest.CardIndex]
-		if !room.CardDeck.PlayCard(card) {
+		if !room.CardDeck.CanPlay(card) {
 			client.Emit("Status", types.S2C_Status{
 				IsError:    true,
 				StatusCode: "card_not_playable",
@@ -257,6 +257,9 @@ func onPlayerJoin(client *socketio.Socket, room *types.Room, player *types.Playe
 			return
 		}
 		player.Cards = append(player.Cards[:*updatePlayerRequest.CardIndex], player.Cards[*updatePlayerRequest.CardIndex+1:]...)
+		if !room.CardDeck.PlayCard(card) {
+			slog.Error("Cannot play card after checking", "roomId", room.RoomId.Hex(), "playerId", player.PlayerId.Hex())
+		}
 		game.OnPlayCard(room, player, *updatePlayerRequest.CardIndex, card)
 
 		if len(player.Cards) == 0 {
