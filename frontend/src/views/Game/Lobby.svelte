@@ -121,8 +121,7 @@
     </span>
 </div>
 
-<!-- TODO Grid not fully responsive -->
-<div class="grid md:grid-flow-col grid-flow-row justify-center mt-6 mb-2 gap-4">
+<div class="grid lg:grid-flow-col grid-flow-row justify-center mt-6 mb-2 gap-4">
     <!-- Rename (This) Player -->
     {#if sessionStore.isConnected()}
         <RenamePlayer />
