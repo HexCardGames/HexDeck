@@ -69,7 +69,13 @@
         "player_name": "Spielername",
         "status": "Status",
         "host": "Host",
-        "you": "Du"
+        "you": "Du",
+        "player": "Spieler",
+        "return_to_game": "Zurück zum Spiel",
+        "selected_card_deck": "Ausgewähltes Kartendeck:",
+        "change_card_deck": "Ändern",
+        "choose_card_deck": "Auswählen",
+        "card_deck_modal": "Wähle ein Kartendeck aus"
     },
     "end_screen": {
         "game_has_ended": "Das Spiel ist vorbei",

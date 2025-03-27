@@ -71,7 +71,11 @@
         "host": "Host",
         "you": "You",
         "player": "Player",
-        "return_to_game": "Return to game"
+        "return_to_game": "Return to game",
+        "selected_card_deck": "Selected card deck:",
+        "change_card_deck": "Change",
+        "choose_card_deck": "Choose",
+        "card_deck_modal": "Select a card deck"
     },
     "end_screen": {
         "game_has_ended": "The game has ended",

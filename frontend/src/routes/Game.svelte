@@ -10,6 +10,11 @@
     import { requestJoinRoom } from "../stores/roomStore";
     import gameStore from "../stores/gameStore";
 
+    let maxRotationDeg = 20;
+    let centerDistancePx = 200;
+    let cardWidth = 100;
+    let cardHeight = 150;
+
     onMount(async () => {
         // TODO: check if already connected to room, currently its overwriting the session
         const params = new URLSearchParams(window.location.search);
@@ -51,7 +56,7 @@
     {#if $sessionStore.gameState == GameState.Lobby}
         <div>
             <!-- Lobby and player list -->
-            <Lobby />
+            <Lobby {cardWidth} {cardHeight} {centerDistancePx} {maxRotationDeg} />
         </div>
     {/if}
 
@@ -59,11 +64,11 @@
         <div class="size-full">
             {#if $gameStore.isLobbyOverlayShown}
                 <div class="absolute inset-0 z-10 bg-white/30 dark:bg-black/30 backdrop-blur-sm mt-24">
-                    <Lobby />
+                    <Lobby {cardWidth} {cardHeight} {centerDistancePx} {maxRotationDeg} />
                 </div>
             {/if}
             <!-- Running game -->
-            <Main />
+            <Main {cardWidth} {cardHeight} {centerDistancePx} {maxRotationDeg} />
         </div>
     {:else if $sessionStore.gameState == GameState.Ended}
         <EndScreen />

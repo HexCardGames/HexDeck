@@ -1,10 +1,12 @@
 <script lang="ts">
     import RenamePlayer from "../../components/RenamePlayer.svelte";
-    import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, TableSearch, Badge, Button, Modal, Popover, Tooltip } from "flowbite-svelte";
+    import CardDeckShowcase from "../../components/CardDeckShowcase.svelte";
+    import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead, TableHeadCell, TableSearch, Badge, Button, Modal, Popover, Tooltip, Card } from "flowbite-svelte";
     import { CircleArrowOutUpLeft, Copy, AlertCircle, UserX, Play, TextCursorInput, Gamepad2 } from "lucide-svelte";
     import { _ } from "svelte-i18n";
     import { GameState, sessionStore } from "../../stores/sessionStore";
     import { toggleLobbyOverlay } from "../../stores/gameStore";
+    import { CardDecks } from "../../stores/cardDeck";
 
     let copied = false;
     let showLeaveModal = false;
@@ -16,6 +18,12 @@
     let showRenameModal = false;
     let kick_player = "";
     let showKickModal = false;
+    let showCardDeckModal = false;
+
+    export let maxRotationDeg: number;
+    export let centerDistancePx: number;
+    export let cardWidth: number;
+    export let cardHeight: number;
 
     function filteredPlayers() {
         return players.filter((player) => player.Username.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -85,34 +93,61 @@
     </div>
 </Modal>
 
-<!-- Leave Room Button -->
-<Button
-    color="none"
-    class="sm:absolute m-2 border-2 border-gray-500 dark:border-gray-300 hover:bg-gray-500 dark:hover:bg-gray-300 hover:text-white dark:hover:text-black rounded-full text-gray-500 dark:text-gray-300"
-    on:click={() => {
-        showLeaveModal = true;
-    }}
->
-    <CircleArrowOutUpLeft class="mr-2" />
-    <span>{$_("lobby.leave_game")}</span>
-</Button>
+<!-- Modal: Select card deck -->
+<Modal bind:open={showCardDeckModal} size="md" backdropClass="fixed inset-0 z-40 bg-gray-900 bg-black/50 dark:bg-black/80 backdrop-opacity-50" style="color: unset;" autoclose outsideclose>
+    <div class="text-center">
+        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+            {$_("lobby.card_deck_modal")}
+        </h3>
+        <div class="grid justify-center gap-5">
+            {#each CardDecks as cardDeck}
+                <Card style="color: unset;">
+                    <span class="mb-[-15px] text-xl">{cardDeck.name}</span>
+                    <div class="flex justify-center">
+                        <CardDeckShowcase cardComponent={cardDeck.cardComponent} cardDeckId={cardDeck.id} {cardHeight} {cardWidth} centerDistancePx={centerDistancePx * 3} {maxRotationDeg} />
+                    </div>
+                    <Button
+                        on:click={() => {
+                            sessionStore.setCardDeck(cardDeck.id);
+                        }}>{$_("lobby.choose_card_deck")}</Button
+                    >
+                </Card>
+            {/each}
+        </div>
+        <Button on:click={() => (showCardDeckModal = false)} color="alternative" class="mt-5 hover:text-dark hover:bg-gray-100">{$_("lobby.cancel")}</Button>
+    </div>
+</Modal>
 
-<!-- Return to game Button -->
-{#if sessionStore.getState().gameState !== GameState.Lobby}
+<div class="flex">
+    <!-- Leave Room Button -->
     <Button
         color="none"
-        class="sm:absolute m-2 right-0 border-2 border-gray-500 dark:border-gray-300 hover:bg-gray-500 dark:hover:bg-gray-300 hover:text-white dark:hover:text-black rounded-full text-gray-500 dark:text-gray-300"
+        class="m-2 border-2 border-gray-500 dark:border-gray-300 hover:bg-gray-500 dark:hover:bg-gray-300 hover:text-white dark:hover:text-black rounded-full text-gray-500 dark:text-gray-300"
         on:click={() => {
-            toggleLobbyOverlay();
+            showLeaveModal = true;
         }}
     >
-        <span>{$_("lobby.return_to_game")}</span>
-        <Gamepad2 class="ml-2" />
+        <CircleArrowOutUpLeft class="mr-2" />
+        <span>{$_("lobby.leave_game")}</span>
     </Button>
-{/if}
+
+    <!-- Return to game Button -->
+    {#if sessionStore.getState().gameState !== GameState.Lobby}
+        <Button
+            color="none"
+            class="m-2 ml-auto border-2 border-gray-500 dark:border-gray-300 hover:bg-gray-500 dark:hover:bg-gray-300 hover:text-white dark:hover:text-black rounded-full text-gray-500 dark:text-gray-300"
+            on:click={() => {
+                toggleLobbyOverlay();
+            }}
+        >
+            <span>{$_("lobby.return_to_game")}</span>
+            <Gamepad2 class="ml-2" />
+        </Button>
+    {/if}
+</div>
 
 <!-- Game Status -->
-<div class="text-center p-6 w-full">
+<div class="md:mt-[-65px] text-center p-6 w-full">
     <span
         >{$_("game_status.game_status")}
         <Badge color="dark">
@@ -197,6 +232,29 @@
 {#if players.length > 5}
     <!-- Search Bar -->
     <TableSearch bind:inputValue={searchQuery} placeholder={$_("lobby.search_player")} />
+{/if}
+
+<!-- Card deck selection -->
+{#if sessionStore.getState().gameState == GameState.Lobby}
+    <div class="flex w-full justify-center my-10">
+        <Card style="color: unset;">
+            <span class="text-xl">{$_("lobby.selected_card_deck")}</span>
+            <span class="opacity-80 mb-[-15px]">{CardDecks.find((e) => e.id == $sessionStore.cardDeckId)?.name}</span>
+            <div class="flex justify-center">
+                <CardDeckShowcase
+                    cardComponent={CardDecks.find((e) => e.id == $sessionStore.cardDeckId)?.cardComponent}
+                    cardDeckId={CardDecks.find((e) => e.id == $sessionStore.cardDeckId)?.id ?? 0}
+                    {cardHeight}
+                    {cardWidth}
+                    centerDistancePx={centerDistancePx * 3}
+                    {maxRotationDeg}
+                />
+            </div>
+            {#if sessionStore.getPlayerPermissions().isHost}
+                <Button on:click={() => (showCardDeckModal = true)}>{$_("lobby.change_card_deck")}</Button>
+            {/if}
+        </Card>
+    </div>
 {/if}
 
 <!-- Players Table -->

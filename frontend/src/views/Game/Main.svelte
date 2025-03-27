@@ -1,17 +1,16 @@
 <script lang="ts">
     import type { PlayerObj } from "../../stores/sessionStore";
     import { derived, get } from "svelte/store";
-    import ClassicCard from "../../components/Cards/ClassicCard.svelte";
     import CardDisplay from "../../components/Game/CardDisplay.svelte";
     import { sessionStore } from "../../stores/sessionStore";
     import OpponentDisplay from "../../components/Game/OpponentDisplay.svelte";
-    import HexV1Card from "../../components/Cards/HexV1Card.svelte";
+    import { CardDecks } from "../../stores/cardDeck";
 
-    let maxRotationDeg = 20;
-    let centerDistancePx = 200;
-    let cardWidth = 100;
-    let cardHeight = 150;
-    let cardComponent = [ClassicCard, HexV1Card][$sessionStore.cardDeckId ?? 0];
+    export let maxRotationDeg: number;
+    export let centerDistancePx: number;
+    export let cardWidth: number;
+    export let cardHeight: number;
+    let cardComponent = CardDecks.find((e) => e.id == $sessionStore.cardDeckId)?.cardComponent;
 
     let opponents = derived(sessionStore.store, ($store) => $store.players.filter((e) => e.PlayerId != sessionStore.getUserId()));
     let playerActive = derived(sessionStore.store, ($store) => ($store.playerStates[$store.userId ?? ""] ?? "").Active ?? false);

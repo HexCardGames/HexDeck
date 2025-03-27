@@ -80,6 +80,10 @@ interface PlayedCardUpdateObj {
     Card: Card;
 }
 
+interface SetCardDeckReq {
+    CardDeckId: number;
+}
+
 interface PlayCardReq {
     CardIndex?: number;
     CardData: any;
@@ -365,6 +369,13 @@ class SessionManager {
         if (this.socket) {
             this.socket.emit(event, message);
         }
+    }
+
+    setCardDeck(id: number) {
+        let request: SetCardDeckReq = {
+            CardDeckId: id,
+        };
+        this.sendMessage("SetCardDeck", JSON.stringify(request));
     }
 
     drawCard() {
