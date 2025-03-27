@@ -25,9 +25,9 @@
 {/snippet}
 
 <div class="game relative grid h-full grid-rows-[1fr_2fr_1fr]">
-    <div class="top">{@render OpponentCards($opponents.slice(0, perSide), 0)}</div>
+    <div class="top flex justify-center items-center flex-row gap-20">{@render OpponentCards($opponents.slice(0, perSide), 0)}</div>
     <div class="middle grid grid-cols-[1fr_300px_1fr]">
-        <div class="left flex justify-center items-center">
+        <div class="left flex justify-center items-center flex-col gap-20">
             {@render OpponentCards($opponents.slice(perSide, perSide * 2), -90)}
         </div>
         <div class="center grid grid-cols-2">
@@ -57,7 +57,7 @@
                 />
             </div>
         </div>
-        <div class="right flex justify-center items-center">
+        <div class="right flex justify-center items-center flex-col gap-20">
             {@render OpponentCards($opponents.slice(perSide * 2, perSide * 3), 90)}
         </div>
     </div>
