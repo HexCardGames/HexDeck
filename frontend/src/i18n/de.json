@@ -83,7 +83,7 @@
         "disconnected": "Getrennt"
     },
     "game_status": {
-        "game_status": "Spielstatus: {game_status}",
+        "game_status": "Spielstatus:",
         "lobby": "Lobby",
         "running": "Läuft",
         "ended": "Beendet"
