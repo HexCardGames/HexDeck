@@ -5,12 +5,13 @@
     import CardDisplay from "../../components/Game/CardDisplay.svelte";
     import { sessionStore } from "../../stores/sessionStore";
     import OpponentDisplay from "../../components/Game/OpponentDisplay.svelte";
+    import HexV1Card from "../../components/Cards/HexV1Card.svelte";
 
     let maxRotationDeg = 20;
     let centerDistancePx = 200;
     let cardWidth = 100;
     let cardHeight = 150;
-    let cardComponent = ClassicCard;
+    let cardComponent = [ClassicCard, HexV1Card][$sessionStore.cardDeckId ?? 0];
 
     let opponents = derived(sessionStore.store, ($store) => $store.players.filter((e) => e.PlayerId != sessionStore.getUserId()));
     let playerActive = derived(sessionStore.store, ($store) => ($store.playerStates[$store.userId ?? ""] ?? "").Active ?? false);
