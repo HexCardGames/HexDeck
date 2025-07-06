@@ -47,6 +47,9 @@ type S2C_PlayedCardUpdate struct {
 	Card      Card
 }
 
+type C2S_SetCardDeck struct {
+	CardDeckId int
+}
 type C2S_UpdatePlayer struct {
 	PlayerId    bson.ObjectID
 	Username    *string

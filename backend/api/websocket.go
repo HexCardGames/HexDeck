@@ -95,6 +95,36 @@ func onPlayerJoin(client *socketio.Socket, room *types.Room, player *types.Playe
 		game.OnRoomUpdate(room)
 	})
 
+	client.On("SetCardDeck", func(datas ...any) {
+		setCardDeckRequest := types.C2S_SetCardDeck{}
+		unpackData(datas, &setCardDeckRequest)
+
+		if room.GameState != types.StateLobby {
+			client.Emit("Status", types.S2C_Status{
+				IsError:    true,
+				StatusCode: "game_already_running",
+				Message:    "You can't change the card deck while the game is running",
+			})
+			return
+		}
+		if !player.HasPermissionBit(types.PermissionHost) {
+			client.Emit("Status", types.S2C_Status{
+				IsError:    true,
+				StatusCode: "insufficient_permission",
+				Message:    "You can't change the card deck unless you are host",
+			})
+			return
+		}
+		if !game.SetCardDeck(room, setCardDeckRequest.CardDeckId) {
+			client.Emit("Status", types.S2C_Status{
+				IsError:    true,
+				StatusCode: "invalid_card_deck",
+				Message:    "No card deck exists with this ID",
+			})
+			return
+		}
+	})
+
 	client.On("UpdatePlayer", func(datas ...any) {
 		player.Mutex.Lock()
 		defer player.Mutex.Unlock()
@@ -248,7 +278,7 @@ func onPlayerJoin(client *socketio.Socket, room *types.Room, player *types.Playe
 			return
 		}
 		card := player.Cards[*updatePlayerRequest.CardIndex]
-		if !room.CardDeck.PlayCard(card) {
+		if !room.CardDeck.CanPlay(card) {
 			client.Emit("Status", types.S2C_Status{
 				IsError:    true,
 				StatusCode: "card_not_playable",
@@ -257,6 +287,9 @@ func onPlayerJoin(client *socketio.Socket, room *types.Room, player *types.Playe
 			return
 		}
 		player.Cards = append(player.Cards[:*updatePlayerRequest.CardIndex], player.Cards[*updatePlayerRequest.CardIndex+1:]...)
+		if !room.CardDeck.PlayCard(card) {
+			slog.Error("Cannot play card after checking", "roomId", room.RoomId.Hex(), "playerId", player.PlayerId.Hex())
+		}
 		game.OnPlayCard(room, player, *updatePlayerRequest.CardIndex, card)
 
 		if len(player.Cards) == 0 {

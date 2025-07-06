@@ -65,7 +65,7 @@
 </header>
 
 <div class="main-container">
-    <div class="page-slot">
+    <div class="page-slot" style="overflow-y: auto;">
         <slot />
     </div>
 </div>

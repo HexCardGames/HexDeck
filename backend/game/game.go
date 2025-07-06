@@ -39,7 +39,7 @@ func CreateRoom() *types.Room {
 		GameState:    types.StateLobby,
 		Players:      make([]*types.Player, 0),
 		PlayersMutex: &sync.Mutex{},
-		CardDeckId:   0,
+		CardDeckId:   1,
 	}
 
 	db.Conn.InsertRoom(newRoom)
@@ -123,6 +123,24 @@ func UpdateGameState(room *types.Room, newState types.GameState) {
 	OnRoomUpdate(room)
 }
 
+func SetCardDeck(room *types.Room, id int) bool {
+	if id < 0 || id > 1 {
+		return false
+	}
+	room.CardDeckId = id
+	OnRoomUpdate(room)
+	return true
+}
+
+func CreateCardDeckObj(room *types.Room) {
+	switch room.CardDeckId {
+	case 0:
+		room.CardDeck = &decks.Classic{}
+	case 1:
+		room.CardDeck = &decks.HexV1{}
+	}
+}
+
 func BroadcastInRoom(room *types.Room, topic string, data interface{}) {
 	for _, player := range room.Players {
 		if !player.Connection.IsConnected || player.Connection.Socket == nil {
@@ -179,7 +197,7 @@ func StartGame(room *types.Room) {
 	if room.GameState != types.StateLobby {
 		return
 	}
-	room.CardDeck = &decks.Classic{}
+	CreateCardDeckObj(room)
 	room.CardDeck.Init(room)
 	UpdateGameState(room, types.StateRunning)
 	UpdateAllPlayers(room)

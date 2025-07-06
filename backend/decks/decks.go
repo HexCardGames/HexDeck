@@ -13,6 +13,10 @@ func DeckFromInterface(cardDeckId int, cardDeck bson.D) types.CardDeck {
 		deck := Classic{}
 		bson.Unmarshal(bsonBytes, &deck)
 		return &deck
+	case 1:
+		deck := HexV1{}
+		bson.Unmarshal(bsonBytes, &deck)
+		return &deck
 	}
 
 	return nil
@@ -24,6 +28,10 @@ func CardFromInterface(cardDeckId int, card bson.D) types.Card {
 	switch cardDeckId {
 	case 0:
 		deck := ClassicCard{}
+		bson.Unmarshal(bsonBytes, &deck)
+		return &deck
+	case 1:
+		deck := HexV1Card{}
 		bson.Unmarshal(bsonBytes, &deck)
 		return &deck
 	}
